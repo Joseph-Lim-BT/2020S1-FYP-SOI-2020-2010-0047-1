@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Smarter Tomorrow</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/brands.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/solid.min.css" rel="stylesheet" />
+    <script src="~/lib/chartjs/Chart.min.js"></script>
+    <script src="~/lib/chartjs/chartjs-plugin-labels.min.js"></script>
+
+    @RenderSection("MoreScripts", false)
+
+</head>
+<body>
+    <img src="~/images/wip.png" sizes="800px, 900px" />
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("0"))
+        {
+            <Partial Name="Admin" />
+        }
+        else if (User.IsInRole("1"))
+        {
+            <Partial Name="StoreSupervisor" />
+        }
+        else if (User.IsInRole("2"))
+        {
+            <Partial Name="StoreIC" />
+        }
+        else if (User.IsInRole("3"))
+        {
+            <Partial Name="Storeman" />
+        }
+        else if (User.IsInRole("4"))
+        {
+            <Partial Name="Serviceman" />
+        }
+    }
+    else
+    {
+        <Partial Name="NoUser" />
+    }
+
+    <div class="container">
+        @RenderBody()
+    </div>
+</body>
+</html>
+<footer class="border-top footer text-muted text-center">
+    <div class="container">
+        &copy; @DateTime.UtcNow.Year - Powered by Microsoft
+        Azure Cognitive Services
+    </div>
+</footer>

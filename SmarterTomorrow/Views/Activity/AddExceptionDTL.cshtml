@@ -1,0 +1,111 @@
+﻿@model activity_exception_dtl;
+
+@section MoreScripts {
+    <script src="~/lib/moment/moment.min.js"></script>
+    <link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+}
+
+<form asp-controller="Activity"
+      asp-action="AddExceptionDTL"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-0 col-sm-6 ">
+            <h2>Add Exception Details</h2>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="ACTIVITY_ID">Activity ID :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="ACTIVITY_ID">
+                @foreach (activity row in ViewData["id"] as List
+<activity>
+        )
+                {
+                    <option value="@row.ACTIVITY_ID">
+                        @row.ACTIVITY_ID
+                    </option>
+                }
+
+            </select>
+
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="EQUIPMENT_ID">Equipment :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="EQUIPMENT_ID">
+                @foreach (assignment row in ViewData["Weapon"] as List
+<assignment>
+        )
+                {
+                    <option value="@row.EQUIPMENT_ID">
+                        @row.EQUIPMENT_ID
+                    </option>
+                }
+
+            </select>
+
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="STATUS">Status :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="STATUS">
+                <option value="LO">Lost(Open)</option>
+                <option value="LC">Lost(Closed)</option>
+                <option value="FO">Faulty(Open)</option>
+                <option value="FC">Faulty(Closed)</option>
+                <option value="NO">Not Tagged(Open)</option>
+                <option value="NC">Not Tagged(Closed)</option>
+                <option value="OO">Others(Open)</option>
+                <option value="OC">Others(Closed)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="QUANTITY">Quantity :</label>
+        <div class="col-sm-5">
+            <input asp-for="QUANTITY" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="QUANTITY" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="REMARKS">Remarks :</label>
+        <div class="col-sm-5">
+            <input asp-for="REMARKS" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="REMARKS" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@Html.Raw(ViewData["Message"])</text>
+                </div>
+            </div>
+        </div>
+    }
+
+</form>

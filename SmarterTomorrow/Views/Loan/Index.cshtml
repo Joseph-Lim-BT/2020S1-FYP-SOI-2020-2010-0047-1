@@ -1,0 +1,29 @@
+﻿<style>
+    h2,p{
+        font-weight:bold;
+    }
+</style>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Loan or Return Equipment</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+<p>Select one:</p>
+
+
+
+
+<li>
+    <a asp-controller="Loan" asp-action="BufferPage">Loan Equipment</a>
+</li>
+<li>
+    <a asp-controller="Loan" asp-action="ReturnEquipments">Return Equipment</a>
+</li>
+

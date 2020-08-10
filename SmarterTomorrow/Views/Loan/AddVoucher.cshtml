@@ -1,0 +1,78 @@
+﻿@model Loan_in;
+
+@section MoreScripts {
+    <script src="~/lib/moment/moment.min.js"></script>
+    <link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#JSExpectDT')
+                .datetimepicker({
+                    format: 'YYYY-MM-DD hh:mm',
+                });
+        });
+
+    </script>
+}
+
+<form asp-controller="Loan"
+      asp-action="AddVoucher"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-0 col-sm-6 ">
+            <h2>Start Loan</h2>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="EXPECTED_RETURN_DTE">Expected Return :</label>
+        <div class="col-sm-3">
+            <div class="input-group date" id="JSExpectDT" data-target-input="nearest">
+
+                <input type="text" class="form-control"
+                       asp-for="EXPECTED_RETURN_DTE"
+                       asp-format="{0:yyyy-MM-dd hh:mm:ss}" />
+                <div class="input-group-append" data-target="#JSExpectDT" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="EXPECTED_RETURN_DTE" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="REMARKS">Remarks :</label>
+        <div class="col-sm-5">
+            <input asp-for="REMARKS" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="REMARKS" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@Html.Raw(ViewData["Message"])</text>
+                </div>
+            </div>
+        </div>
+    }
+
+</form>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}

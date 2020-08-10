@@ -1,0 +1,104 @@
+﻿@model List<assignment>;
+<link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#jsMovieTable').DataTable({
+            ordering: true,
+            paging: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+        });
+    });
+
+    /**/</script>
+<h2>List of Equipment Assigned</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">@TempData["Message"]</div>
+}
+@if (User.IsInRole("0") || User.IsInRole("1"))
+{
+    <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="AddEquipmentAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assign Equipment</a>
+    <a type="button" class="btn btn-primary" asp-controller="Package" asp-action="AddPackageAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assign Package</a>
+}
+<table class="table table-condensed table-hover" id="jsMovieTable">
+    <thead>
+        <tr>
+
+            <th scope="col">Equipment/Package ID</th>
+            <th scope="col">Activity ID</th>
+            <th scope="col">NRIC</th>
+            <th scope="col">Date Time Last Modified</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified By</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (assignment ic in Model)
+        {
+
+        <tr>
+            @if (ic.PACKAGE_ID is null)
+            {
+                @foreach (Equipment row in ViewData["equipment"] as List<Equipment>)
+                {
+                    if (row.EQUIPMENT_ID.Equals(ic.EQUIPMENT_ID))
+                    {
+                        <td><p>@row.EQUIPMENT_NAME</p><p>(@ic.EQUIPMENT_ID)</p></td>
+                    }
+                }
+            }
+            else
+            {
+        <td>
+            @foreach (package row in ViewData["package"] as List<package>)
+            {
+                if (row.PACKAGE_ID.Equals(ic.PACKAGE_ID))
+                {
+                    <p>@row.PACKAGE_DESC</p><p>@ic.PACKAGE_ID</p>
+                }
+            }
+        </td>
+            }
+                <td>@ic.ACTIVITY_ID</td>
+                <td>@ic.NRIC</td>
+                <td>@ic.DTE_TIME_LAST_MOD</td>
+                <td>@ic.CREATED_BY</td>
+                <td>@ic.MODIFIED_BY</td>
+
+                <td>
+
+                    @{
+
+                        <a asp-controller="Equipment"
+                           asp-action="EditEquipmentAssigned"
+                           asp-route-id="@ic.ASSIGNMENT_ID">
+                            Edit
+                        </a>
+
+                    }
+                    |
+                    @{
+                        if (User.IsInRole("0") || User.IsInRole("1"))
+                        {
+                            <a asp-controller="Equipment" asp-action="Delete" asp-route-id="@ic.ASSIGNMENT_ID"
+                               onclick="return confirm('Are you sure you want to Un-Assign?')">Un-Assign</a>
+                        }
+                    }
+
+                </td>
+
+            </tr>
+
+        }
+
+    </tbody>
+</table>

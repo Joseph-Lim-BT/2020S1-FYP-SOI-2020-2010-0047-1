@@ -1,0 +1,72 @@
+﻿@model assignment;
+
+@section MoreScripts {
+    <script src="~/lib/moment/moment.min.js"></script>
+    <link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+}
+
+<form asp-controller="Equipment"
+      asp-action="EditEquipmentAssigned"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-0 col-sm-6 ">
+            <h2>Edit Equipment Assigned</h2>
+        </div>
+    </div>
+    <input asp-for="EQUIPMENT_ID" hidden />
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="NRIC">NRIC</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="NRIC">
+                @foreach (User row in ViewData["Assign"] as List
+         <User>
+             )
+                {
+                    <option value="@row.NRIC">
+                        @row.NRIC
+                    </option>
+                }
+
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="ACTIVITY_ID">Activity ID :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="ACTIVITY_ID">
+                @foreach (activity row in ViewData["ActivityID"] as List
+        <activity>
+            )
+                {
+                    <option value="@row.ACTIVITY_ID">
+                        @row.ACTIVITY_DESC
+                    </option>
+                }
+
+            </select>
+
+        </div>
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </div>
+        </div>
+
+        @if (ViewData["Message"] != null)
+        {
+            <div class="form-group row">
+                <div class="offset-sm-2 col-sm-6">
+                    <div class="alert alert-@ViewData["MsgType"]">
+                        <text>@Html.Raw(ViewData["Message"])</text>
+                    </div>
+                </div>
+            </div>
+        }
+
+</form>

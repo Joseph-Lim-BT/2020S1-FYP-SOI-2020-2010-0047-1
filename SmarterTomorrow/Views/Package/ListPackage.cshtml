@@ -1,0 +1,98 @@
+﻿
+
+
+@model List<package>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#jsEquipmentTable').DataTable({
+                ordering: true,
+                paging: true,
+                searching: true,
+                info: true,
+                lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+            });
+        });
+    </script>
+}
+
+
+<p>
+    <h1>List of packages</h1>
+    <a type="button" class="btn btn-primary" asp-controller="Package" asp-action="AddPackage">Create new package</a>
+    @if (User.IsInRole("0") || User.IsInRole("1"))
+    {
+        <a type="button" class="btn btn-primary" asp-controller="Package" asp-action="ListPackageAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assigned Package List</a>
+    }
+</p>
+<table id="jsEquipmentTable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Package ID</th>
+            <th scope="col">Equipment Name</th>
+            <th scope="col">Accessory Name</th>
+            <th scope="col">Package Type</th>
+            <th scope="col">Package Desc</th>
+            @if (User.IsInRole("0") || User.IsInRole("1"))
+            {
+                <th scope="col">Date Time Created</th>
+                <th scope="col">Date Time Last Modified</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Modified By</th>
+                <th scope="col">Action</th>
+            }
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (package ab in Model)
+        {
+        <tr>
+            <td>@ab.PACKAGE_ID</td>
+            @foreach (Equipment row in ViewData["equipment"] as List<Equipment>)
+            {
+                if (row.EQUIPMENT_ID.Equals(ab.EQUIPMENT_ID))
+                {
+                    <td>@row.EQUIPMENT_NAME</td>
+                }
+            }
+            @foreach (accessories row in ViewData["accessories"] as List<accessories>)
+            {
+                if (row.ACCESSORY_ID.Equals(ab.ACCESSORY_ID))
+                {
+                    <td>@row.ACCESSORY_NAME</td>
+                }
+            }
+            <td>@ab.PACKAGE_TYPE</td>
+            <td>@ab.PACKAGE_DESC</td>
+
+            @if (User.IsInRole("0") || User.IsInRole("1"))
+            {
+                <td>@ab.DTE_TIME_CR</td>
+                <td>@ab.DTE_TIME_LAST_MOD</td>
+                <td>@ab.CREATED_BY</td>
+                <td>@ab.MODIFIED_BY</td>
+
+                <td>
+                    <a asp-controller="Package" asp-action="UpdatePackage" asp-route-id="@ab.PACKAGE_ID">
+                        Edit
+                    </a>
+
+                    <a asp-controller="Package" asp-action="DeletePackage" asp-route-id="@ab.PACKAGE_ID"
+                       onclick="return confirm('Delete Package ID :<@ab.PACKAGE_ID')">
+                        Delete
+                    </a>
+
+                </td>
+            }
+        </tr>
+        }
+
+    </tbody>
+</table>

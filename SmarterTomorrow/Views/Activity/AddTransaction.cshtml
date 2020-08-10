@@ -1,0 +1,113 @@
+﻿@model activity_trans;
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+
+@section MoreScripts {
+    <script src="~/lib/moment/moment.min.js"></script>
+    <link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+}
+
+<form asp-controller="Activity"
+      asp-action="AddTransaction"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-0 col-sm-6 ">
+            <h2>Add Transaction</h2>
+        </div>
+    </div>
+    @*<script>
+            function generateRandomString($length = 10) {
+                $characters =
+                    '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $charactersLength = strlen($characters);
+                $randomString = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString.= $characters[rand(0, $charactersLength - 1)];
+                }
+                return $randomString;
+            }
+        </script>*@
+
+    @*<div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="TRANS_ID">Transaction ID</label>
+            <div class="col-sm-5">
+                <input asp-for="TRANS_ID" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <span asp-validation-for="TRANS_ID" class="text-danger"></span>
+            </div>
+        </div>*@
+
+<div class="form-group row">
+    <label class="control-label col-sm-2" asp-for="ACTIVITY_ID">Activity ID :</label>
+    <div class="col-sm-3">
+        <select class="form-control dropdown" asp-for="ACTIVITY_ID">
+            @foreach (activity row in ViewData["ActivityID"] as List<activity>)
+            {
+                <option value="@row.ACTIVITY_ID">
+                    @row.ACTIVITY_ID
+                </option>
+            }
+        </select>
+    </div>
+</div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="NRIC">NRIC :</label>
+        <div class="col-sm-5">
+            <input asp-for="NRIC" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="NRIC" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="TYPE">Type :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="TYPE">
+                <option value="RG">Registration</option>
+                <option value="IS">Issue</option>
+                <option value="RE">Return</option>
+                <option value="CA">Change Appointment</option>
+                <option value="CD">Change Detail</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="MACHINE_NAME">Machine Name :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="MACHINE_NAME">
+                <option value="Machine 1">Machine 1</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <div class="alert alert-@ViewData[" MsgType"]">
+                    <text>@Html.Raw(ViewData["Message"])</text>
+                </div>
+            </div>
+        </div>
+    }
+
+</form>

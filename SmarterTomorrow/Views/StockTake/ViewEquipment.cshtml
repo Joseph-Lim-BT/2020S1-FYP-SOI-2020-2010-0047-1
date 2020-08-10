@@ -1,0 +1,125 @@
+﻿@model List<stocktake_equipment>;
+
+@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#jsStocktakeEquipment').DataTable({
+                ordering: true,
+                paging: true,
+                searching: true,
+                info: true,
+                lengthChange: true,
+                pageLength: 20
+            });
+        });
+    </script>
+
+}
+
+
+<h2> Equipment </h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+
+<div>
+
+    <table id="jsStocktakeEquipment" class="table">
+        <thead>
+            <tr>
+                <th scope="col">Equipment ID</th>
+                <th scope="col">Equipment Name</th>
+                <th scope="col">Equipment Material</th>
+                <th scope="col">Serial No</th>
+                <th scope="col">Equipment Type</th>
+                <th scope="col">Storage Location</th>
+                <th scope="col">Storage Bin</th>
+                <th scope="col">Box Lot No</th>
+                <th scope="col">Butt No</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (stocktake_equipment eq in Model)
+            {
+                <tr>
+                    <td>@eq.EQUIPMENT_ID</td>
+                    <td>@eq.EQUIPMENT_NAME</td>
+                    <td>
+                        @if (eq.ELEMENT_MATERIAL_NO == "XYZ123")
+                        {
+                            <p>Weapons</p>
+                        }
+                        else if (eq.ELEMENT_MATERIAL_NO == "XYZ234")
+                        {
+                            <p>Accessories</p>
+                        }
+                        else
+                        {
+                            <p>Uniform</p>
+                        }
+                    </td>
+                    <td>@eq.SERIAL_NO</td>
+                    <td>
+                        @if (eq.EQUIPMENT_TYPE_ID == 1)
+                        {
+                            <p>Assault Rifle</p>
+                        }
+                        else if (eq.EQUIPMENT_TYPE_ID == 2)
+                        {
+                            <p>SMG</p>
+                        }
+                        else if (eq.EQUIPMENT_TYPE_ID == 3)
+                        {
+                            <p>Sniper</p>
+                        }
+                        else if (eq.EQUIPMENT_TYPE_ID == 4)
+                        {
+                            <p>Melee</p>
+                        }
+                        else if (eq.EQUIPMENT_TYPE_ID == 5)
+                        {
+                            <p>Others</p>
+                        }
+                    </td>
+                    <td>@eq.STORAGE_LOCATION</td>
+                    <td>Armstoke @eq.STORAGE_BIN</td>
+                    <td>@eq.BOX_LOT_NO</td>
+                    <td>@eq.BUTT_NO</td>
+                    <td>@eq.QUANTITY</td>
+                    <td>
+                        @if (eq.STATUS == 0)
+                        {
+                            <p>Unavailable</p>
+                        }
+                        else if (eq.STATUS == 1)
+                        {
+                            <p>Available</p>
+                        }
+                        else if (eq.STATUS == 2)
+                        {
+                            <p>Assigned</p>
+                        }
+                        else
+                        {
+                            <p>Loaned</p>
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+</div>
+

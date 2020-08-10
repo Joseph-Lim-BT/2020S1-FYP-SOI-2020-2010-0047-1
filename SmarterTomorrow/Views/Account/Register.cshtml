@@ -1,0 +1,110 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Login";
+   
+}
+    <form asp-controller="Account"
+          asp-action="Register"
+          method="post">
+
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <h2>Register User</h2>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="NRIC">NRIC :</label>
+            <div class="col-sm-5">
+                <input asp-for="NRIC" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <span asp-validation-for="NRIC" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="PASSWORD">Password :</label>
+            <div class="col-sm-5">
+                <input type="password" asp-for="PASSWORD" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <span asp-validation-for="PASSWORD" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="FULL_NAME">Full Name :</label>
+            <div class="col-sm-5">
+                <input asp-for="FULL_NAME" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <span asp-validation-for="FULL_NAME" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="GROUP_ID">Role :</label>
+            <div class="col-sm-5">
+                <select class="form-control dropdown" asp-for="GROUP_ID">
+                    @if (User.IsInRole("0"))
+                    {
+                        <option value="0">Administrator</option>
+                        <option value="1">Store Supervisor</option>
+                        <option value="2">Store IC</option>
+                        <option value="3">Storemen</option>
+                    }
+                    else if (User.IsInRole("1"))
+                    {
+                        <option value="2">Store IC</option>
+                        <option value="3">Storemen</option>
+
+                    }
+                    <option value="4">Servicemen</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="UNIT">Unit:</label>
+            <div class="col-sm-5">
+                <select asp-for="UNIT" class="form-control">
+                    <option value="">No Rank</option>
+                    <option value="Unit 1">Unit 1</option>
+                    <option value="Unit 2">Unit 2</option>
+                    <option value="Unit 3">Unit 3</option>
+
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="RANK">Rank:</label>
+            <div class="col-sm-5">
+                <select asp-for="RANK" class="form-control">
+                    <option value="">No Rank</option>
+                    <option value="PR">Private</option>
+                    <option value="SRG">Sergeant</option>
+                    <option value="PC">Platoon Commander</option>
+                    <option value="OC">Officer Commander</option>
+                    <option value="CO">Commanding Officer</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <span class="text-danger">@ViewData["Message"]</span>
+        </div>
+
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </form>
+
+

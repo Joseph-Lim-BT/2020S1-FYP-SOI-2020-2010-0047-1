@@ -1,0 +1,72 @@
+﻿@model activity_trans
+
+    <form asp-controller="Activity"
+          asp-action="UpdateTransaction"
+          method="post">
+
+        <div class="form-group row">
+            <div class="offset-sm-0 col-sm-4">
+                <h2>Update Transaction</h2>
+            </div>
+        </div>
+        <input asp-for="TRANS_ID" hidden>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="ACTIVITY_ID">Activity ID :</label>
+            <div class="col-sm-5">
+                <input asp-for="ACTIVITY_ID" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <span asp-validation-for="ACTIVITY_ID" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="NRIC">NRIC :</label>
+            <div class="col-sm-5">
+                <input asp-for="NRIC" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <span asp-validation-for="NRIC" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="TYPE">Type :</label>
+            <div class="col-sm-3">
+                <select class="form-control dropdown" asp-for="TYPE">
+                    <option value="RG">Registration</option>
+                    <option value="IS">Issue</option>
+                    <option value="RE">Return</option>
+                    <option value="CA">Change Appointment</option>
+                    <option value="CD">Change Detail</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="MACHINE_NAME">Machine Name :</label>
+            <div class="col-sm-3">
+                <select class="form-control dropdown" asp-for="MACHINE_NAME">
+                    <option value="Machine 1">Machine 1</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </div>
+
+        @if (ViewData["Message"] != null)
+        {
+            <div class="form-group row">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@ViewData["Message"]</text>
+                </div>
+            </div>
+        }
+
+    </form>
+

@@ -1,0 +1,170 @@
+﻿@model Equipment;
+
+@section MoreScripts {
+    <script src="
+            /lib/moment/moment.min.js"></script>
+    <link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#JsCreatedDT')
+                .datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+            $('#JsModifiedDT')
+                .datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+        });
+    </script>
+
+}
+
+    
+<form asp-controller="Equipment"
+      asp-action="AddEquipment"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <h2>Register New Weapon</h2>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="SERIAL_NO">Serial No :</label>
+        <div class="col-sm-5">
+            <input asp-for="SERIAL_NO" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="SERIAL_NO" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="EQUIPMENT_NAME">Equipment Name :</label>
+        <div class="col-sm-5">
+            <input asp-for="EQUIPMENT_NAME" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="EQUIPMENT_NAME" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="ELEMENT_MATERIAL_NO">Equipment Category :</label>
+        <div class="col-sm-5">
+            <select class="form-control dropdown" asp-for="ELEMENT_MATERIAL_NO">
+                <option value="">
+                    --SELECT--
+                </option>
+
+                @foreach (material row in ViewData["Material"] as List<material>)
+                {
+
+                    <option value="@row.ELEMENT_MATERIAL_NO">
+                        @row.ELEMENT_MATERIAL_DESC
+                    </option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="EQUIPMENT_TYPE_ID">Equipment Type:</label>
+        <div class="col-sm-5">
+            <select asp-for="EQUIPMENT_TYPE_ID" class="form-control">
+                <option value="">
+                    --SELECT--
+                </option>
+                <option value="1">Assault Rifle</option>
+                <option value="2">SMG</option>
+                <option value="3">Sniper</option>
+                <option value="4">Melee</option>
+                <option value="5">Others</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="STORAGE_LOCATION">Storage Location :</label>
+        <div class="col-sm-5">
+            <select asp-for="STORAGE_LOCATION" class="form-control">
+                <option value="">
+                    --SELECT--
+                </option>
+                <option value="Warehouse A">Warehouse A</option>
+                <option value="Warehouse B">Warehouse B</option>
+                <option value="Warehouse C">Warehouse C</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="STORAGE_BIN">Storage Bin :</label>
+        <div class="col-sm-5">
+            <select asp-for="STORAGE_BIN" class="form-control">
+                <option value="">
+                    --SELECT--
+                </option>
+                <option value="1">Armskote 1</option>
+                <option value="2">Armskote 2</option>
+                <option value="3">Armskote 3 </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="BOX_LOT_NO">Box Lot No:</label>
+        <div class="col-sm-5">
+            <input asp-for="BOX_LOT_NO" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="BOX_LOT_NO" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="BUTT_NO">Butt No:</label>
+        <div class="col-sm-5">
+            <input asp-for="BUTT_NO" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="BUTT_NO" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="QUANTITY">Quantity:</label>
+        <div class="col-sm-5">
+            <input type ="number" asp-for="QUANTITY" value="1" readonly class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="QUANTITY" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <input type="text" asp-for="DTE_TIME_CR" asp-format="{0:yyyy-MM-dd}" value="@DateTime.Today" hidden />
+    <input asp-for="DTE_TIME_LAST_MOD" asp-format="{0:yyyy-MM-dd}" value="@DateTime.Today" hidden />
+
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Register" class="btn btn-primary" />
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="alert alert-@ViewData["MsgType"]">
+                <text>@ViewData["Message"]</text>
+            </div>
+        </div>
+    }
+
+</form>

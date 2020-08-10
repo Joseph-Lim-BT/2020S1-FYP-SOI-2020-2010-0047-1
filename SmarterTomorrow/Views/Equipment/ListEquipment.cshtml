@@ -1,0 +1,244 @@
+﻿@model List<Equipment>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#jsEquipmentTable').DataTable({
+                ordering: true,
+                paging: true,
+                searching: true,
+                info: true,
+                lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+            });
+        });
+    </script>
+
+}
+
+<style>
+    a {
+        display: inline-block;
+    }
+</style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#btnupload').on('click', function () {
+            var fileExtension = ['xls', 'xlsx'];
+            var filename = $('#fileupload').val();
+            if (filename.length == 0) {
+                alert("Please select a file.");
+                return false;
+            }
+            else {
+                var extension = filename.replace(/^.*\./, '');
+                if ($.inArray(extension, fileExtension) == -1) {
+                    alert("Please select only excel files.");
+                    return false;
+                }
+            }
+            var fdata = new FormData();
+            var fileUpload = $("#fileupload").get(0);
+            var files = fileUpload.files;
+            fdata.append(files[0].name, files[0]);
+            $.ajax({
+                type: "POST",
+                url: "/Equipment/Import",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: fdata,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.length == 0)
+                        alert('Some error occured while uploading');
+                    else {
+                        $('#divPrint').html(response);
+                    }
+                },
+                error: function (e) {
+                    $('#divPrint').html(e.responseText);
+                }
+            });
+        })
+        $('#btnExport').on('click', function () {
+            var fileExtension = ['xls', 'xlsx'];
+            var filename = $('#fileupload').val();
+            if (filename.length == 0) {
+                alert("Please select a file then Import");
+                return false;
+            }
+        });
+    });
+
+</script>
+
+
+<h2>Add Equipment by excel</h2>
+<form asp-controller="Equipment" asp-action="Export">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="file" id="fileupload" name="files" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <input type="button" name="Upload" value="Upload" id="btnupload" class="btn btn-primary" />
+                <a href="@Url.Action("Download", "Equipment")">Download</a>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="row">
+            <div id="divPrint"></div>
+
+        </div>
+    </div>
+</form>
+
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+
+
+<div class="inline-buttons">
+    <p>
+        <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="AddEquipment" &nbsp;&nbsp;&nbsp;&nbsp;>Add New Equipment</a>
+        @if (User.IsInRole("0") || User.IsInRole("1"))
+        {
+            <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="AddEquipmentAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assign Equipment</a>
+            <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="ListEquipmentAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assigned Equipment List</a>
+        }
+        </p>
+</div>
+
+<style>
+    a {
+        font-family: Verdana;
+    }
+
+</style>
+
+
+<h2>Equipment List</h2>
+<table id="jsEquipmentTable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Equipment ID</th>
+            <th scope="col">Equipment Name</th>
+            <th scope="col">Equipment Material</th>
+            <th scope="col">Serial No</th>
+            <th scope="col">Equipment Type</th>
+            <th scope="col">Storage Location</th>
+            <th scope="col">Storage Bin</th>
+            <th scope="col">Box Lot No</th>
+            <th scope="col">Butt No</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Last Modified On</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified By</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Equipment eq in Model)
+        {
+            <tr>
+                <td>@eq.EQUIPMENT_ID</td>
+                <td>@eq.EQUIPMENT_NAME</td>
+                <td>@if (eq.ELEMENT_MATERIAL_NO == "XYZ123")
+                {
+                    <p>Weapons</p>
+                }
+                else if (eq.ELEMENT_MATERIAL_NO == "XYZ234")
+                {
+                    <p>Accessories</p>
+                }
+                else
+                {
+                    <p>Uniform</p>
+                }</td>
+                <td>@eq.SERIAL_NO</td>
+                <td>
+                    @if (eq.EQUIPMENT_TYPE_ID == 1)
+                    {
+                        <p>Assault Rifle</p>
+                    }
+                    else if (eq.EQUIPMENT_TYPE_ID == 2)
+                    {
+                        <p>SMG</p>
+                    }
+                    else if (eq.EQUIPMENT_TYPE_ID == 3)
+                    {
+                        <p>Sniper</p>
+                    }
+                    else if (eq.EQUIPMENT_TYPE_ID == 4)
+                    {
+                        <p>Melee</p>
+                    }
+                    else if (eq.EQUIPMENT_TYPE_ID == 5)
+                    {
+                        <p>Others</p>
+                    }
+                </td>
+                <td>@eq.STORAGE_LOCATION</td>
+                <td>Armstoke @eq.STORAGE_BIN</td>
+                <td>@eq.BOX_LOT_NO</td>
+                <td>@eq.BUTT_NO</td>
+                <td>@eq.QUANTITY</td>
+                <td>@String.Format("{0:yyyy-MM-dd}", eq.DTE_TIME_CR)</td>
+                <td>@String.Format("{0:yyyy-MM-dd}", eq.DTE_TIME_LAST_MOD)</td>
+                <td>@eq.CREATED_BY</td>
+                <td>@eq.MODIFIED_BY</td>
+                <td>
+                    @if (eq.STATUS == 0)
+                    {
+                        <p>Unavailable</p>
+                    }
+                    else if (eq.STATUS == 1)
+                    {
+                        <p>Available</p>
+                    }
+                    else if (eq.STATUS == 2)
+                    {
+                        <p>Assigned</p>
+                    } else
+                    {
+                        <p>Loaned</p>
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Equipment" asp-action="EditEquipment" asp-route-id="@eq.EQUIPMENT_ID">
+                        Edit
+                    </a>
+                     @if (User.IsInRole("0") || User.IsInRole("1")) { 
+                      <a asp-controller="Equipment" asp-action="DeleteEquipment" asp-route-id="@eq.EQUIPMENT_ID"
+                                 onclick="return confirm('Delete Equipment ID :<@eq.EQUIPMENT_ID')">
+                                  Delete
+                        </a>
+                    }
+                 </td>
+                       
+
+                    
+                    
+                
+            </tr>
+        }
+    </tbody>
+
+
+
+
+</table>

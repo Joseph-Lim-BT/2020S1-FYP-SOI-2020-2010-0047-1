@@ -1,0 +1,138 @@
+﻿@model activity
+@section MoreScripts {
+    <script src="~/lib/moment/moment.min.js"></script>
+    <link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#JSStartDT')
+                .datetimepicker({
+                    format: 'YYYY-MM-DD hh:mm',
+                });
+            $('#JSEndDT')
+                .datetimepicker({
+                    format: 'YYYY-MM-DD hh:mm',
+                });
+        });
+
+    </script>
+}
+<form asp-controller="Activity"
+      asp-action="UpdateActivity"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-0 col-sm-4">
+            <h2>Edit Activity</h2>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="BRIGADE">Brigade :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="BRIGADE">
+                <option value="1 Brigade">1 Brigade</option>
+                <option value="2 Brigade">2 Brigade</option>
+                <option value="3 Brigade">3 Brigade</option>
+            </select>
+        </div>
+    </div>
+
+    @*<div class="form-group row">
+            <label class="control-label col-sm-2" asp-for="BRIGADE">Brigade :</label>
+            <div class="col-sm-3">
+                <select class="form-control dropdown" asp-for="BRIGADE">
+                    <option value="5SIB">5SIB</option>
+                </select>
+            </div>
+        </div>*@
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="TYPE">Type :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="TYPE">
+                <option value="M">Mobilisation</option>
+                <option value="T">Trial run</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="ACTIVITY_DESC">Activity Description :</label>
+        <div class="col-sm-5">
+            <input asp-for="ACTIVITY_DESC" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="ACTIVITY_DESC" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="STATUS">Status :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="STATUS">
+                <option value="AC">Activated</option>
+                <option value="DE">De-Activated</option>
+                <option value="DR">Draft</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="ACTIVITY_START">Start Date :</label>
+        <div class="col-sm-3">
+            <div class="input-group date" id="JSStartDT" data-target-input="nearest">
+
+                <input type="text" class="form-control"
+                       asp-for="ACTIVITY_START"
+                       asp-format="{0:yyyy-MM-dd hh:mm:ss}" />
+                <div class="input-group-append" data-target="#JSStartDT" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="ACTIVITY_START" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="ACTIVITY_END">End Date :</label>
+        <div class="col-sm-3">
+            <div class="input-group date" id="JSEndDT" data-target-input="nearest">
+
+                <input type="text" class="form-control"
+                       asp-for="ACTIVITY_END"
+                       asp-format="{0:yyyy-MM-dd hh:mm:ss}" />
+                <div class="input-group-append" data-target="#JSEndDT" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <span asp-validation-for="ACTIVITY_END" class="text-danger"></span>
+        </div>
+    </div>
+    <input asp-for="ACTIVITY_ID" hidden />
+
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="alert alert-@ViewData["MsgType"]">
+                <text>@ViewData["Message"]</text>
+            </div>
+        </div>
+    }
+
+</form>
+

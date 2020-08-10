@@ -1,0 +1,71 @@
+﻿@model List<Loan_in_dtl>
+
+@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#jsMovieTable').DataTable({
+                ordering: true,
+                paging: true,
+                searching: true,
+                info: true,
+                lengthChange: true,
+                lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+            });
+        });
+    </script>
+}
+
+<h2>Loan Details:</h2>
+
+
+
+<div>
+    <p><b>Personnel:</b></p>
+    
+</div>
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+
+
+<p style="color:red">Please check that the correct items have been borrowed. Please remember to return them on time or you will face a penalty</p>
+<p><b>Loan ID:</b> @ViewData["voucher"]</p>
+<p><b>Expected Return Date:</b> @ViewData["return"]</p>
+<table id="jsMovieTable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Equipment ID</th>
+            <th scope="col">Quantity</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @{
+            foreach (Loan_in_dtl eqdtl in Model)
+
+            {
+                <tr>
+                    <td>@eqdtl.EQUIPMENT_ID</td>
+                    <td>@eqdtl.QUANTITY</td>
+                </tr>
+            }
+
+        }
+
+
+
+    </tbody>
+</table>
+
+
+

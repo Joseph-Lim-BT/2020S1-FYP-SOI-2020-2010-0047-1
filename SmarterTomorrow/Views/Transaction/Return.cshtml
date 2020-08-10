@@ -1,0 +1,92 @@
+﻿@model List<activity_trans>
+
+
+<link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#jsMovieTable').DataTable({
+            ordering: true,
+            paging: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+        });
+    });
+
+/**/</script>
+<h2>View Past Transactions</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">@TempData["Message"]</div>
+}
+<table id="jsMovieTable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Transaction ID</th>
+            <th scope="col">Activity ID</th>
+            <th scope="col">NRIC</th>
+            <th scope="col">Type</th>
+            <th scope="col">Machine Name</th>
+            <th scope="col">Date Time Created</th>
+            <th scope="col">Date Time Last Modified</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Modified By</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (activity_trans eq in Model)
+        {
+
+        <tr>
+
+            <td>
+                <a asp-controller="Activity"
+                   asp-action="ListTransactionDTL"
+                   asp-route-id=@eq.TRANS_ID>
+                    @eq.TRANS_ID
+                </a>
+            </td>
+            <td>@eq.ACTIVITY_ID</td>
+            <td>@eq.NRIC</td>
+            @if (eq.TYPE.Equals("RG"))
+            {
+                <td>Registration</td>
+            }
+            else if (eq.TYPE.Equals("IS"))
+            {
+                <td>Issue</td>
+            }
+            else if (eq.TYPE.Equals("RE"))
+            {
+                <td>Return</td>
+            }
+            else if (eq.TYPE.Equals("CA"))
+            {
+                <td>Change Appointment</td>
+            }
+            else
+            {
+                <td>Change Details</td>
+            }
+
+            <td>@eq.MACHINE_NAME</td>
+            <td>@eq.DTE_TIME_CR</td>
+            <td>@eq.DTE_TIME_LAST_MOD</td>
+            <td>@eq.CREATED_BY</td>
+            <td>@eq.MODIFIED_BY</td>
+
+
+
+
+        </tr>
+
+
+        }
+    </tbody>
+</table>

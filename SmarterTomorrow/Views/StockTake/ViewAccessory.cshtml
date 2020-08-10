@@ -1,0 +1,64 @@
+﻿@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#jsStocktakeAccessories').DataTable({
+                ordering: true,
+                paging: true,
+                searching: true,
+                info: true,
+                lengthChange: true,
+                pageLength: 20
+            });
+        });
+    </script>
+
+}
+
+@model List<stocktake_accessories>;
+<h2> Accessories </h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">
+        @TempData["Message"]
+    </div>
+}
+
+<div>
+
+    <table id="jsStocktakeAccessories" class="table">
+        <thead>
+            <tr>
+                <th scope="col">Accessory ID</th>
+                <th scope="col">Accessory name</th>
+                <th scope="col">Element Material No</th>
+                <th scope="col">Serial No</th>
+                <th scope="col">Storage location</th>
+                <th scope="col">Storage bin</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Box lot No</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (stocktake_accessories a in Model)
+            {
+            <tr>
+                <td>@a.ACCESSORY_ID</td>
+                <td>@a.ACCESSORY_NAME</td>
+                <td>@a.ELEMENT_MATERIAL_NO</td>
+                <td>@a.SERIAL_NO</td>
+                <td>@a.STORAGE_LOCATION</td>
+                <td>@a.STORAGE_BIN</td>
+                <td>@a.QUANTITY</td>
+                <td>@a.BOX_LOT_NO</td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+

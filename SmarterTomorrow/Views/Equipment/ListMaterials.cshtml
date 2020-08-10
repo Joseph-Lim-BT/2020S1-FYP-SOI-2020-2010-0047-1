@@ -1,0 +1,103 @@
+﻿@model List<material>
+@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#jsMovieTable').DataTable({
+                ordering: true,
+                paging: true,
+                searching: true,
+                info: true,
+                lengthChange: true,
+                lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+            });
+        });
+
+/**/</script>
+}
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">@TempData["Message"]</div>
+}
+<p>
+    <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="AddMaterial">Create New Material</a>
+</p>
+
+<h1>
+    List of Equipment Components
+</h1>
+<table id="jsMovieTable" class="table">
+
+    <thead>
+        <tr>
+            <th scope="col">Element Material No</th>
+            <th scope="col">Material Description</th>
+            <th scope="col">Group NSN No</th>
+            <th scope="col">Group NSN Description</th>
+            <th scope="col">Material Type</th>
+            <th scope="col">Material Unit</th>
+            @if (User.IsInRole("0") || User.IsInRole("1"))
+            {
+                <th scope="col">Date Time Created</th>
+                <th scope="col">Date Time Last Modified</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Modified By</th>
+            }
+
+            <th scope="col">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (material ml in Model)
+        {
+
+            <tr>
+
+                <td>@ml.ELEMENT_MATERIAL_NO</td>
+                <td>@ml.ELEMENT_MATERIAL_DESC</td>
+                <td>@ml.GROUP_NSN_NO</td>
+                <td>@ml.GROUP_NSN_DESC</td>
+                <td>@ml.MATERIAL_TYPE</td>
+                <td>@ml.MATERIAL_UNIT</td>
+                @if (User.IsInRole("1") || User.IsInRole("0"))
+                {
+                    <td>@ml.DTE_TIME_CR</td>
+                    <td>@ml.DTE_TIME_LAST_MOD</td>
+                    <td>@ml.CREATED_BY</td>
+                    <td>@ml.MODIFIED_BY</td>
+                }
+
+            <td>
+
+                <a asp-controller="Equipment"
+                   asp-action="EditMaterial"
+                   asp-route-id="@ml.ELEMENT_MATERIAL_NO">
+                    Edit
+                </a>
+
+                @if (User.IsInRole("0") || User.IsInRole("1"))
+                {
+                    <text> |</text>
+                    <a asp-controller="Equipment" asp-action="DeleteMaterial" asp-route-id="@ml.ELEMENT_MATERIAL_NO" onclick="return confirm('Are you sure you want to delete: @ml.ELEMENT_MATERIAL_NO - @ml.ELEMENT_MATERIAL_DESC?')">Delete</a>
+                }
+
+            </td>
+                }
+
+
+
+
+
+            </tr>
+
+
+        }
+    </tbody>
+</table>

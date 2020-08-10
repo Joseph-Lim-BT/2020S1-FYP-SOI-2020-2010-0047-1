@@ -1,0 +1,82 @@
+﻿@model activity_trans
+
+
+<link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script>
+
+    function loadCustomerOrders() {
+        var ddlCustomerId = $("#ddlCustomerId").val();
+        var apiUrl = "api/Transaction/Customer/" + ddlCustomerId + "/Order";
+        //var apiUrl = "/api/Sales/Customer/" + ddlCustomerId + "/Order";
+        var tbOrders = $("#tbOrders")
+        $.getJSON(apiUrl, function (result) {
+            tbOrders.html("");
+            $.each(result, function (i, item) {
+                tbOrders.append("<tr><td>" + item.tranS_ID + "</td>" +
+                    "<td>" + item.nric + "</td >" +
+                    "<td>" + item.type + "</td>" +
+                    "<td>" + item.machinE_NAME + "</td>" +
+                    "</tr > ")
+            });
+        });
+    }
+
+
+
+
+    $(document).ready(function () {
+
+
+        $("#ddlCustomerId").change(loadCustomerOrders);
+        $('#jsMovieTable').DataTable({
+            ordering: true,
+            paging: true,
+            searching: true,
+            info: true,
+            lengthChange: true,
+            lengthMenu: [[6, 10, 20, -1], [6, 10, 20, "All"]]
+        });
+
+    });
+</script>
+<h2>View Past Transactions Types</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["MsgType"]">@TempData["Message"]</div>
+}
+
+
+<div class="form-group row">
+    <label class="control-label col-sm-2" asp-for="TYPE">Transaction Type:</label>
+    <div class="col-sm-4">
+        <select asp-for="TYPE" class="form-control" id="ddlCustomerId">
+            <option value="">-- Select --</option>
+            <option value="RG">Registration</option>
+            <option value="IS">Issue</option>
+            <option value="RE">Return</option>
+            <option value="CA">Change Appointment</option>
+            <option value="CD">Change Details</option>
+
+
+
+        </select>
+    </div>
+</div>
+<table id="jsMovieTable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Transaction ID</th>
+            <th scope="col">NRIC</th>
+            <th scope="col">Type</th>
+            <th scope="col">Machine Name</th>
+        </tr>
+    </thead>
+    <tbody id="tbOrders">
+
+    </tbody>
+</table>

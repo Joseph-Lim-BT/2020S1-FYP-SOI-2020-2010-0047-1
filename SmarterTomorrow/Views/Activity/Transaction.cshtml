@@ -1,0 +1,71 @@
+﻿@model activity_trans;
+@section MoreScripts {
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData[" MsgType"]">@TempData["Message"]</div>
+}
+<form asp-controller="Activity"
+      asp-action="ListTransaction"
+      method="post">
+
+    <div class="form-group row">
+        <div class="offset-sm-0 col-sm-6 ">
+            <h2>Choose Transaction ID</h2>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="control-label col-sm-2" asp-for="TRANS_ID">Transaction ID :</label>
+        <div class="col-sm-3">
+            <select class="form-control dropdown" asp-for="TRANS_ID">
+
+                @*@foreach (activity_nr row in ViewData["ACTIVITY_ID"] as List
+                    <activity_nr>
+                        )
+                        {
+                        <option value="@row.ACTIVITY_ID">
+                            @row.NRIC
+                        </option>
+                        <option value="1">1</option>
+                        }*@
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-6">
+            <input type="submit" value="Submit" class="btn btn-primary" />
+
+        </div>
+    </div>
+
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-6">
+                <div class="alert alert-@ViewData[" MsgType"]">
+                    <text>@Html.Raw(ViewData["Message"])</text>
+                </div>
+            </div>
+        </div>
+    }
+
+</form>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData[" MsgType"]">
+        @TempData["Message"]
+    </div>
+}
