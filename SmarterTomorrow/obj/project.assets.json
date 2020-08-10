@@ -12615,11 +12615,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\18015081\\Source\\Repos\\SmarterTomorrowTest\\SmarterTomorrow\\SmarterTomorrow.csproj",
+      "projectUniqueName": "C:\\Users\\18015081\\Source\\Repos\\2020S1-FYP-SOI-2020-2010-0047-1\\SmarterTomorrow\\SmarterTomorrow.csproj",
       "projectName": "SmarterTomorrow",
-      "projectPath": "C:\\Users\\18015081\\Source\\Repos\\SmarterTomorrowTest\\SmarterTomorrow\\SmarterTomorrow.csproj",
+      "projectPath": "C:\\Users\\18015081\\Source\\Repos\\2020S1-FYP-SOI-2020-2010-0047-1\\SmarterTomorrow\\SmarterTomorrow.csproj",
       "packagesPath": "C:\\Users\\18015081\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\18015081\\Source\\Repos\\SmarterTomorrowTest\\SmarterTomorrow\\obj\\",
+      "outputPath": "C:\\Users\\18015081\\Source\\Repos\\2020S1-FYP-SOI-2020-2010-0047-1\\SmarterTomorrow\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\18015081\\AppData\\Roaming\\NuGet\\NuGet.Config",
