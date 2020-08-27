@@ -47,6 +47,7 @@ VALUES('{0}','{1:yyyy-MM-dd hh:mm:ss}','{2:yyyy-MM-dd hh:mm:ss}','{3}','{4}','{5
         public IActionResult EquipmentAvailable()
         {
 
+            ViewData["Person"] = GetPerson();
             List<Equipment> equipmentAvailable = new List<Equipment>();
             List<assignment> equipmentAssigned = DBUtl.GetList<assignment>(
 @"SELECT * FROM assignment WHERE NRIC='" + User.Identity.Name + "'");
@@ -95,7 +96,7 @@ VALUES('{0}','{1:yyyy-MM-dd hh:mm:ss}','{2:yyyy-MM-dd hh:mm:ss}','{3}','{4}','{5
                 string updateLoan = @"UPDATE loan_in SET EXPECTED_RETURN_DTE='{0:yyyy-MM-dd hh:mm:ss}' WHERE VOUCHER_ID ='" + model.VOUCHER_ID + "'";
                 DateTime endDate = Convert.ToDateTime(expectedReturn.ACTIVITY_END);
                 DBUtl.ExecSQL(updateLoan, endDate);
-                TempData["Message"] = "Equipment:" + id + " has been borrowed successfully!";
+                TempData["Message"] = "Equipment:" + id + " has been loaned successfully!";
                 TempData["MsgType"] = "success";
 
             }
@@ -110,21 +111,23 @@ VALUES('{0}','{1:yyyy-MM-dd hh:mm:ss}','{2:yyyy-MM-dd hh:mm:ss}','{3}','{4}','{5
 
         public IActionResult ReturnEquipments()
         {
-
+            ViewData["Person"] = GetPerson();
             string update = "UPDATE usr SET CURRENT_PG='return' WHERE NRIC='" + User.Identity.Name + "'";
             DBUtl.ExecSQL(update);
-            List<Loan_in> loan = DBUtl.GetList<Loan_in>(@"SELECT * FROM loan_in WHERE NRIC='" + User.Identity.Name + "'");
+            List<Equipment> equipment = GetListEquipment();
+            List <Loan_in> loan = DBUtl.GetList<Loan_in>(@"SELECT * FROM loan_in WHERE NRIC='" + User.Identity.Name + "'");
             List<Loan_in_dtl> loan_dtl = DBUtl.GetList<Loan_in_dtl>(@"SELECT * FROM loan_in_dtl");
             List<Loan_in_dtl> returnList = new List<Loan_in_dtl>();
-            //default datetime in sql
-            DateTime value = new DateTime(1900, 1, 1);
             foreach (Loan_in ln in loan)
             {
                 foreach (Loan_in_dtl dtl in loan_dtl)
                 {
-                    if (ln.VOUCHER_ID.Equals(dtl.VOUCHER_ID) && DateTime.Compare(dtl.RETURN_DTE, value) == 0)
+                    foreach (Equipment eq in equipment)
                     {
-                        returnList.Add(dtl);
+                        if (ln.VOUCHER_ID.Equals(dtl.VOUCHER_ID) && eq.QUANTITY == 0)
+                        {
+                            returnList.Add(dtl);
+                        }
                     }
                 }
             }
@@ -166,7 +169,7 @@ VALUES('{0}',1,'{1}','RE','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
             if (HttpContext.Session.GetInt32("no") != rowCountz)
             {
                 HttpContext.Session.SetInt32("no", rowCountz);
-                TempData["Message"] = latestAddition[0].EQUIPMENT_ID + " has been borrowed successfully!";
+                TempData["Message"] = latestAddition[0].EQUIPMENT_ID + " has been Loaned successfully!";
                 TempData.Keep("Message");
                 TempData["MsgType"] = "success";
 

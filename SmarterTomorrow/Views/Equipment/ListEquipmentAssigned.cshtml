@@ -87,7 +87,7 @@
                     }
                     |
                     @{
-                        if (User.IsInRole("0") || User.IsInRole("1"))
+                        if (User.IsInRole("0") || User.IsInRole("1") ||User.IsInRole("2"))
                         {
                             <a asp-controller="Equipment" asp-action="Delete" asp-route-id="@ic.ASSIGNMENT_ID"
                                onclick="return confirm('Are you sure you want to Un-Assign?')">Un-Assign</a>

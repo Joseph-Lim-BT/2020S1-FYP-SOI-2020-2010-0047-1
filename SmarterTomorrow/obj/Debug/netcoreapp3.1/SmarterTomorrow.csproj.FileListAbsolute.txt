@@ -241,3 +241,5 @@ C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\bin\Debug\net
 C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Debug\netcoreapp3.1\SmarterTomorrow.csproj.CoreCompileInputs.cache
 C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Debug\netcoreapp3.1\SmarterTomorrow.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Debug\netcoreapp3.1\Razor\Views\Loan\AccessoryAvailable.cshtml.g.cs
+C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json

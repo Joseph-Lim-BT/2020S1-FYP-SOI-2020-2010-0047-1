@@ -152,7 +152,7 @@ namespace FYP.Controllers
 
 
 
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult ListTransaction()
         {
             List<activity_trans> transList = DBUtl.GetList<activity_trans>(
@@ -161,7 +161,7 @@ namespace FYP.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult AddTransaction()
         {
             ViewData["TransID"] = GetListTransID();
@@ -170,7 +170,7 @@ namespace FYP.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult AddTransaction(activity_trans newTrans)
         {
             string uuid = GenerateUUID();
@@ -231,7 +231,7 @@ namespace FYP.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult UpdateTransaction(string id)
         {
             // Get the record from the database using the id
@@ -253,7 +253,7 @@ namespace FYP.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult UpdateTransaction(activity_trans trans)
         {
 
@@ -289,7 +289,7 @@ namespace FYP.Controllers
                 return RedirectToAction("ListTransaction");
             }
         }
-        [Authorize(Roles = "0,1")]
+        [Authorize(Roles = "0")]
         public IActionResult DeleteTransaction(string id)
         {
             int status = 1;
@@ -315,20 +315,20 @@ namespace FYP.Controllers
 
 
         //Transaction Detail
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult ListTransactionDTL(string id)
         {
             List<activity_trans_dtl> transdtlList = DBUtl.GetList<activity_trans_dtl>(@"SELECT * FROM Activity_trans_dtl WHERE TRANS_ID='" + id + "'");
             return View(transdtlList);
         }
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         [HttpGet]
         public IActionResult AddTransactionDetail()
         {
             ViewData["TransID"] = GetListTransID();
             return View();
         }
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         [HttpPost]
         public IActionResult AddTransactionDetail(activity_trans_dtl newTransDetail)
         {
@@ -369,7 +369,7 @@ BOM_NO,STORAGE_LOCATION,STORAGE_BIN,BOX_LOT_NO,QUANTITY)
                 return RedirectToAction("ListTransactionDTL");
             }
         }
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         [HttpGet]
         public IActionResult UpdateTransactionDetail(string id)
         {
@@ -390,7 +390,7 @@ BOM_NO,STORAGE_LOCATION,STORAGE_BIN,BOX_LOT_NO,QUANTITY)
                 return RedirectToAction("ListTransactionDTL");
             }
         }
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         [HttpPost]
         public IActionResult UpdateTransactionDetail(activity_trans_dtl dtl)
         {
@@ -433,7 +433,7 @@ VALUES('{0}',1,'{1}','CD','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
             }
         }
 
-        [Authorize(Roles = "0,1")]
+        [Authorize(Roles = "0")]
         public IActionResult DeleteTransactionDTL(string id)
         {
             string delete = "DELETE FROM Activity_trans_dtl WHERE RECORD_ID='{0}'";
@@ -454,7 +454,7 @@ VALUES('{0}',1,'{1}','CD','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
 
 
         [HttpGet]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult AddExceptionDTL()
         {
 
@@ -475,7 +475,7 @@ VALUES('{0}',1,'{1}','CD','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
         }
 
         [HttpPost]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult AddExceptionDTL(activity_exception_dtl exceptionDtl)
         {
 
@@ -509,7 +509,7 @@ VALUES('{0}',1,'{1}','CD','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
         }
 
         [HttpGet]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult UpdateExceptionDTL(int id)
         {
 
@@ -547,7 +547,7 @@ VALUES('{0}',1,'{1}','CD','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
         }
 
         [HttpPost]
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult UpdateExceptionDTL(activity_exception_dtl exceptionDTL)
         {
 
@@ -610,17 +610,15 @@ VALUES('{0}',1,'{1}','CD','Machine 1','{2:yyyy-MM-dd hh:mm:ss}','{3:yyyy-MM-dd h
 
 
         //Exception Detail
-        [Authorize(Roles = "0,1,2")]
+        [Authorize(Roles = "0")]
         public IActionResult ListExceptionDTL(string id)
         {
             List<activity_exception_dtl> excdtlList = DBUtl.GetList<activity_exception_dtl>(
       @"SELECT * FROM Activity_exception_dtl ");
             return View(excdtlList);
         }
-        [Authorize(Roles = "0,1,2")]
-        [HttpGet]
 
-        [Authorize(Roles = "0,1")]
+        [Authorize(Roles = "0")]
         public IActionResult DeleteExceptionDetail(string id)
         {
             string delete = "DELETE FROM Activity_exception_dtl WHERE RECORD_ID='{0}'";

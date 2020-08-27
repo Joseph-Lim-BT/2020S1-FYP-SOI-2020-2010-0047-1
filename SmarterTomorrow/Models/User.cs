@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.SS.Formula.Functions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace SmarterTomorrow.Models
         [RegularExpression("[STFG]\\d{7}[A-Z]", ErrorMessage = "Invalid NRIC")]
         public string NRIC { get; set; }
 
+        [Required(ErrorMessage = "Cannot be empty!")]
+        [StringLength(32, MinimumLength = 8, ErrorMessage ="Password must be at least 8 characters!")]
         public string PASSWORD { get; set; }
 
         [Required(ErrorMessage = "Enter Full name")]

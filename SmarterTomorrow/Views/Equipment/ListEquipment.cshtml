@@ -79,7 +79,6 @@
 
 </script>
 
-
 @if (TempData["Message"] != null)
 {
     <div class="alert alert-@TempData["MsgType"]">
@@ -91,7 +90,7 @@
 <div class="inline-buttons">
     <p>
         <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="AddEquipment" &nbsp;&nbsp;&nbsp;&nbsp;>Add New Equipment</a>
-        @if (User.IsInRole("0") || User.IsInRole("1"))
+        @if (User.IsInRole("0") || User.IsInRole("1") || User.IsInRole("2"))
         {
             <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="AddEquipmentAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assign Equipment</a>
             <a type="button" class="btn btn-primary" asp-controller="Equipment" asp-action="ListEquipmentAssigned" &nbsp;&nbsp;&nbsp;&nbsp;>Assigned Equipment List</a>

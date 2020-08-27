@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace SmarterTomorrow.Controllers
 {
-    //test
+
     public class AccountController : Controller
     {
         private const string LOGIN_SQL =
@@ -25,16 +25,14 @@ namespace SmarterTomorrow.Controllers
         private const string ROLE_COL = "GROUP_ID";
         private const string NAME_COL = "NRIC";
 
-        private const string REDIRECT_CNTR = "Equipment";
-        private const string REDIRECT_ACTN = "ListEquipment";
-
-        private const string LOGIN_VIEW = "Login";
+        private const string REDIRECT_CNTR = "Home";
+        private const string REDIRECT_ACTN = "Index";
 
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
             TempData["ReturnUrl"] = returnUrl;
-            return View(LOGIN_VIEW);
+            return View();
         }
 
         [AllowAnonymous]
@@ -45,7 +43,7 @@ namespace SmarterTomorrow.Controllers
             {
                 ViewData["Message"] = "Incorrect NRIC or Password";
                 ViewData["MsgType"] = "warning";
-                return View(LOGIN_VIEW);
+                return View();
             }
             else
             {

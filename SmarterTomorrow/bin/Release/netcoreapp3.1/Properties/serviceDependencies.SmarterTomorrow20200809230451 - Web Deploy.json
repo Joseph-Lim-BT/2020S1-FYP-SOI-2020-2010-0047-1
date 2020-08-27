@@ -3,7 +3,12 @@
     "mssql1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/smarterstorefyp/databases/fypdb",
       "type": "mssql.azure",
-      "connectionId": "DefaultConnection",
+      "connectionId": "ProductionConnection",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql2": {
+      "type": "mssql.onprem",
+      "connectionId": "ProductionConnection",
       "secretStore": "AzureAppSettings"
     }
   }

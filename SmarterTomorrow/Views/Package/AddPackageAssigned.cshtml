@@ -19,7 +19,7 @@
                 @foreach (User row in ViewData["Assign"] as List<User>)
                 {
                     <option value="@row.NRIC">
-                        @row.NRIC
+                       @(row.FULL_NAME + "(" + row.NRIC + ")")
                     </option>
                 }
             </select>

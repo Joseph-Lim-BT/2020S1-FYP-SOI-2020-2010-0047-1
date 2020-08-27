@@ -241,3 +241,5 @@ C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Release\n
 C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Release\netcoreapp3.1\SmarterTomorrow.dll
 C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Release\netcoreapp3.1\SmarterTomorrow.pdb
 C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Release\netcoreapp3.1\SmarterTomorrow.genruntimeconfig.cache
+C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\bin\Release\netcoreapp3.1\Properties\serviceDependencies.local.json
+C:\Users\18015081\Source\Repos\SmarterTomorrowTest\SmarterTomorrow\obj\Release\netcoreapp3.1\Razor\Views\Loan\AccessoryAvailable.cshtml.g.cs

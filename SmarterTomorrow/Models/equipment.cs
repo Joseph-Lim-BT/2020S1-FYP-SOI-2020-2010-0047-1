@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace SmarterTomorrow.Models
       public string STORAGE_LOCATION { get; set; }
 
       public string STORAGE_BIN { get; set; }
-      
+
       public int STATUS { get; set; }
 
       [Required(ErrorMessage = "Please enter Box Lot Number")]
